@@ -31,5 +31,7 @@ namespace DapperAbstract
         public bool? PumpStatus { get; set; }
 
         public int? ValveStatus { get; set; }
+
+        public string Message { get; set; }
     }
 }

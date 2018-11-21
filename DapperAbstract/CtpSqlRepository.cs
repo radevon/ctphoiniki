@@ -19,20 +19,60 @@ namespace DapperAbstract
             SimpleCRUD.SetDialect(SimpleCRUD.Dialect.SQLServer);
         }
 
-        public IEnumerable<CtpParameters> GetCtpParameters()
-        {
-            using (SqlConnection connection = new SqlConnection(this.ConnectionString))
-            {
-                return connection.GetList<CtpParameters>();
-            }
-        }
 
-        public int? InsertCtpParameter(CtpParameters new_)
-        {
-            using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+        #region Adreses
+            public IEnumerable<Address> GetCtpAddresses()
             {
-                return connection.Insert(new_);
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.GetList<Address>();
+                }
             }
-        }
+
+            public int? InsertNewAddress(Address new_)
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.Insert(new_);
+                }
+            }
+
+            public int RemoveAddress(int Id)
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.Delete<Address>(Id);
+                }
+            }
+
+        #endregion
+
+
+        #region Parameters
+            public IEnumerable<CtpParameters> GetCtpParameters(string BindingId,int count)
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.GetListPaged<CtpParameters>(1, count, "where BindingId=@BindingId_", "RecvDate desc", new { BindingId_ = BindingId });
+                }
+            }
+
+            public IEnumerable<CtpParameters> GetCtpParameters(string BindingId, DateTime date)
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.GetListPaged<CtpParameters>(1, 3000, "where BindingId=@BindingId_ and RecvDate between @start and @end", "RecvDate desc", new { BindingId_ = BindingId,start=date.Date,end=date.Date.AddDays(1)});
+                }
+            }
+
+            public int? InsertCtpParameter(CtpParameters new_)
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.Insert(new_);
+                }
+            }
+
+        #endregion
     }
 }

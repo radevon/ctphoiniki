@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CtpSqlRepository.cs" />
+    <Compile Include="Models\Address.cs" />
     <Compile Include="Models\CtpParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

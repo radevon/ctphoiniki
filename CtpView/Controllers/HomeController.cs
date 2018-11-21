@@ -13,22 +13,10 @@ namespace CtpView.Controllers
         CtpSqlRepository repo = new CtpSqlRepository(ConfigurationManager.ConnectionStrings["CtpData"].ConnectionString);
         public ActionResult Index()
         {
-            IEnumerable<CtpParameters> elems = repo.GetCtpParameters();
+            IEnumerable<CtpParameters> elems = repo.GetCtpParameters("b64c3925-7fe4-4932-b549-280d5e6e8026", DateTime.Now);
             return View(elems);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+       
     }
 }

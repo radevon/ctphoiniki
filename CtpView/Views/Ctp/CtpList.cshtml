@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Address>
+
+@if(Model.Any()){
+    foreach(Address item in Model){
+        <li>
+            @Html.ActionLink(String.Format("{0}, {1}",item.ObjectName, item.Addres),"sfd","Ctp")
+        </li>
+    }
+}
+else
+{
+    <li><span class="text-muted">нет объектов</span></li>
+}
+
+
+
