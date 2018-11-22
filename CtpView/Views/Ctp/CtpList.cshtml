@@ -3,13 +3,13 @@
 @if(Model.Any()){
     foreach(Address item in Model){
         <li>
-            @Html.ActionLink(String.Format("{0}, {1}",item.ObjectName, item.Addres),"sfd","Ctp")
+            @Html.ActionLink(String.Format("{0}, {1}", item.ObjectName, item.Addres), "DetailsAddress", "Ctp", new { Id=item.Id},null)
         </li>
     }
 }
 else
 {
-    <li><span class="text-muted">нет объектов</span></li>
+    <li><span class="text-muted" style="padding:0 3px">нет объектов</span></li>
 }
 
 

@@ -29,6 +29,14 @@ namespace DapperAbstract
                 }
             }
 
+            public Address GetCtpAddress(int Id)
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.Get<Address>(Id);
+                }
+            }
+
             public int? InsertNewAddress(Address new_)
             {
                 using (SqlConnection connection = new SqlConnection(this.ConnectionString))
@@ -73,6 +81,17 @@ namespace DapperAbstract
                 }
             }
 
+        #endregion
+
+        #region agregate
+            public IEnumerable<AddressCtpData> GetLastDataByObjects()
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.Query<AddressCtpData>(@"SELECT addr.Id, addr.ObjectName, addr.Addres, addr.BindingId, p.RecvDate, p.Temp1, p.Temp2, p.Temp3, p.Pressure1, p.Pressure2, p.Pressure3, p.Pressure4, p.PumpStatus, p.ValveStatus, p.Message
+  FROM dbo.Address addr left join dbo.lastctpparameters p on addr.BindingId=p.BindingId order by addr.ObjectName");
+                }
+            }
         #endregion
     }
 }

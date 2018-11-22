@@ -116,7 +116,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CtpController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -149,9 +148,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Ctp\Overview.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Ctp\CtpList.cshtml" />
+    <Content Include="Views\Ctp\DetailsAddress.cshtml" />
+    <Content Include="Views\Shared\DisplayMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DapperAbstract\DapperAbstract.csproj">

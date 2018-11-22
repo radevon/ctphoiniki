@@ -1,0 +1,11 @@
+﻿@model string
+@{
+    ViewBag.Title = "Сообщение об ошибке";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row well">
+    <h3>@Html.Raw(Model??"-")</h3>
+</div>
+
+
