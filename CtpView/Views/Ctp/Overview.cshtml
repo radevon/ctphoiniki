@@ -10,45 +10,71 @@
 
 
 <div class="row">
-    <div class="col-md-12">
-        <table class="table">
-            <tr>
-                <th>@Html.DisplayNameFor(x => x.Id)</th>
-                <th>@Html.DisplayNameFor(x => x.BindingId)</th>
-                <th>@Html.DisplayNameFor(x => x.ObjectName)</th>
-                <th>@Html.DisplayNameFor(x => x.Addres)</th>
-                <th>@Html.DisplayNameFor(x => x.RecvDate)</th>
-                <th>@Html.DisplayNameFor(x => x.Temp1)</th>
-                <th>@Html.DisplayNameFor(x => x.Temp3)</th>
-                <th>@Html.DisplayNameFor(x => x.Temp2)</th>
-                <th>@Html.DisplayNameFor(x => x.Pressure1)</th>
-                <th>@Html.DisplayNameFor(x => x.Pressure2)</th>
-                <th>@Html.DisplayNameFor(x => x.Pressure3)</th>
-                <th>@Html.DisplayNameFor(x => x.Pressure4)</th>
-                <th>@Html.DisplayNameFor(x => x.PumpStatus)</th>
-                <th>@Html.DisplayNameFor(x => x.ValveStatus)</th>
-                <th>@Html.DisplayNameFor(x => x.Message)</th>
-            </tr>
-            @foreach (AddressCtpData p in Model)
-            {
+    <div class="col-md-12" id="DataContent">
+        <table class="table table-condensed table-hover">
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(x=>p.Id)</td>
-                    <td>@Html.DisplayFor(x => p.BindingId)</td>
-                    <td>@Html.DisplayFor(x => p.ObjectName)</td>
-                    <td>@Html.DisplayFor(x => p.Addres)</td>
-                    <td>@Html.DisplayFor(x => p.RecvDate)</td>
-                    <td>@Html.DisplayFor(x => p.Temp1)</td>
-                    <td>@Html.DisplayFor(x => p.Temp2)</td>
-                    <td>@Html.DisplayFor(x => p.Temp3)</td>
-                    <td>@Html.DisplayFor(x => p.Pressure1)</td>
-                    <td>@Html.DisplayFor(x => p.Pressure2)</td>
-                    <td>@Html.DisplayFor(x => p.Pressure3)</td>
-                    <td>@Html.DisplayFor(x => p.Pressure4)</td>
-                    <td>@Html.DisplayFor(x => p.PumpStatus)</td>
-                    <td>@Html.DisplayFor(x => p.ValveStatus)</td>
-                    <td>@Html.DisplayFor(x => p.Message)</td>
+
+                    <th>Identity</th>
+                    <th>Наимен</th>
+                    <th>Адрес</th>
+                    <th>Время получ</th>
+                    <th>T<sub>под</sub>, &deg;C</th>
+                    <th>T<sub>обр</sub>, &deg;C</th>
+                    <th>T<sub>возд</sub>, &deg;C</th>
+                    <th>P<sub>1</sub>, МПа</th>
+                    <th>P<sub>2</sub>, МПа</th>
+                    <th>P<sub>3</sub>, МПа</th>
+                    <th>P<sub>4</sub>, МПа</th>
+                    <th>Насос</th>
+                    <th>Заслонка</th>
+                    <th>Сообщение</th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (AddressCtpData p in Model)
+                {
+                    <tr>
+
+                        <td class="text-muted">@p.BindingId</td>
+                        <td><a href='@Url.Action("DetailsAddress", "Ctp", new {Id=p.Id})' target="_self" style="font-weight:bold">@p.ObjectName</a></td>
+                        <td>@p.Addres</td>
+                        <td style="font-size:11px">@(p.RecvDate.HasValue ? p.RecvDate.Value.ToString("dd MMM yyyy, HH:mm:ss") : "-")</td>
+                        <td>@(p.Temp1.HasValue ? p.Temp1.Value.ToString("0.0") : "-")</td>
+                        <td>@(p.Temp2.HasValue ? p.Temp2.Value.ToString("0.0") : "-")</td>
+                        <td>@(p.Temp3.HasValue ? p.Temp3.Value.ToString("0.0") : "-")</td>
+                        <td>@(p.Pressure1.HasValue ? p.Pressure1.Value.ToString("0.0#") : "-")</td>
+                        <td>@(p.Pressure2.HasValue ? p.Pressure2.Value.ToString("0.0#") : "-")</td>
+                        <td>@(p.Pressure3.HasValue ? p.Pressure3.Value.ToString("0.0#") : "-")</td>
+                        <td>@(p.Pressure4.HasValue ? p.Pressure4.Value.ToString("0.0#") : "-")</td>
+                        <td>@if (p.PumpStatus.HasValue) {
+                                @(p.PumpStatus.Value ? Html.Raw("<span class='label label-success'>вкл&nbsp;</span>") : Html.Raw("<span class='label label-danger'>выкл</span>"))
+                            }
+                            else
+                            {
+                                @:-
+                            }
+                        </td>
+                        <td>@if (p.ValveStatus.HasValue)
+                            {
+                                switch (p.ValveStatus.Value)
+                                {
+                                    case -1: <text>закр</text>; break;
+                                    case 0: <text>покой</text> break;
+                                    case 1: <text>откр</text> break;
+                                    default: <text>неизв</text> break;
+                                }
+                            }
+                            else
+                            {
+                                @:-
+                            }
+                        </td>
+                        <td title="@Html.DisplayFor(x=>p.Message)" style="color:#ff8585; font-size:10px">@if (p.Message != null)
+                        {@(p.Message.Length > 20 ? p.Message.Substring(0, 20) + "..." : p.Message)}</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>

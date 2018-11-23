@@ -8,6 +8,14 @@
     margin-top:35px;
 }
 
+#DataContent {
+    font-family:monospace;
+}
+
+#DataContent tr td, #DataContent tr th{
+    line-height:1.1em;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
