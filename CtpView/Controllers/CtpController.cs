@@ -29,8 +29,13 @@ namespace CtpView.Controllers
 
         public ActionResult Overview()
         {
+            return View();
+        }
+
+        public ActionResult LoadLastData()
+        {
             IEnumerable<AddressCtpData> elems = repo.GetLastDataByObjects();
-            return View(elems);
+            return PartialView(elems);
         }
 
         public ActionResult DetailsAddress(int Id)

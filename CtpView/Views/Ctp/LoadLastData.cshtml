@@ -1,0 +1,75 @@
+﻿@model IEnumerable<AddressCtpData>
+
+<table class="table table-condensed table-hover">
+    <thead>
+        <tr>
+
+            <th>Identity</th>
+            <th>Наимен</th>
+            <th>Адрес</th>
+            <th>Время получ</th>
+            <th>T<sub>под</sub>, &deg;C</th>
+            <th>T<sub>обр</sub>, &deg;C</th>
+            <th>T<sub>возд</sub>, &deg;C</th>
+            <th>P<sub>1</sub>, МПа</th>
+            <th>P<sub>2</sub>, МПа</th>
+            <th>P<sub>3</sub>, МПа</th>
+            <th>P<sub>4</sub>, МПа</th>
+            <th>Насос</th>
+            <th>Заслонка</th>
+            <th>Сообщение</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (AddressCtpData p in Model)
+        {
+            <tr>
+
+                <td class="text-muted">@p.BindingId</td>
+                <td><a href='@Url.Action("DetailsAddress", "Ctp", new {Id=p.Id})' target="_self" style="font-weight:bold">@p.ObjectName</a></td>
+                <td>@p.Addres</td>
+                <td style="font-size:11px">@(p.RecvDate.HasValue ? p.RecvDate.Value.ToString("dd MMM yyyy, HH:mm:ss") : "-")</td>
+                <td>@(p.Temp1.HasValue ? p.Temp1.Value.ToString("0.0") : "-")</td>
+                <td>@(p.Temp2.HasValue ? p.Temp2.Value.ToString("0.0") : "-")</td>
+                <td>@(p.Temp3.HasValue ? p.Temp3.Value.ToString("0.0") : "-")</td>
+                <td>@(p.Pressure1.HasValue ? p.Pressure1.Value.ToString("0.0#") : "-")</td>
+                <td>@(p.Pressure2.HasValue ? p.Pressure2.Value.ToString("0.0#") : "-")</td>
+                <td>@(p.Pressure3.HasValue ? p.Pressure3.Value.ToString("0.0#") : "-")</td>
+                <td>@(p.Pressure4.HasValue ? p.Pressure4.Value.ToString("0.0#") : "-")</td>
+                <td>
+                    @if (p.PumpStatus.HasValue)
+                    {
+                        @(p.PumpStatus.Value ? Html.Raw("<span class='label label-success'>вкл&nbsp;</span>") : Html.Raw("<span class='label label-danger'>выкл</span>"))
+                    }
+                    else
+                    {
+                        @:-
+                            }
+            </td>
+            <td>
+                @if (p.ValveStatus.HasValue)
+                {
+                    switch (p.ValveStatus.Value)
+                    {
+                        case -1: <text>закр</text>; break;
+                        case 0: <text>покой</text> break;
+                        case 1: <text>откр</text> break;
+                        default: <text>неизв</text> break;
+                    }
+                }
+                else
+                {
+                    @:-
+                            }
+        </td>
+        <td title="@Html.DisplayFor(x=>p.Message)" style="color:#ff8585; font-size:10px">
+            @if (p.Message != null)
+            {@(p.Message.Length > 20 ? p.Message.Substring(0, 20) + "..." : p.Message)}
+    </td>
+</tr>
+        }
+    </tbody>
+</table>
+
+
+

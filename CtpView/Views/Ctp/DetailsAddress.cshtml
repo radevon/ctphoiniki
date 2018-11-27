@@ -5,39 +5,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>DetailsAddress</h2>
-
-<div>
-    <h4>Address</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ObjectName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ObjectName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Addres)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Addres)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BindingId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BindingId)
-        </dd>
-
-    </dl>
+<div class="jumbotron">
+    <h2 class="text-primary"><span class="glyphicon glyphicon-home"></span>&nbsp;@Model.ObjectName</h2>
+    <p class="text-muted">@Model.Addres</p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+<div id="CtpDetails">
+    <ctp bindingid="@Model.BindingId" datainterval="360" updatetimeout="30000"></ctp>
+
+</div>
+
+
+<template id="templ">
+    <div>
+        {{lastData.temp1}}
+    </div>    
+</template>
+
+
+
+@section scripts{
+<script src='@Url.Content("~/Scripts/vue.min.js")'></script>
+<script src='@Url.Content("~/Scripts/vuedata/ctpview.js?e="+@DateTime.Now.ToString("ddmmyy HH"))'></script>
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+        new Vue({
+            el: "#CtpDetails"
+        });
+    })
+
+</script>
+}

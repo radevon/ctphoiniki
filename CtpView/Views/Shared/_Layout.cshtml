@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/moment")
 
     <!--[if lte IE 9]>
       <script src='@Url.Content("~/Scripts/html5shiv.js")'></script>
@@ -20,13 +22,14 @@
 
 
     <script type="text/javascript">
-        var ajaxBasePath = '@String.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~")).TrimEnd('/')'; /*'http://localhost:13032';*/
+        
         $(function () {
             moment.locale('ru')
         })
     </script>
 </head>
 <body>
+    <div id="loading"></div>
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -60,8 +63,18 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript">
+        $(document).ajaxError(function (e, xhr) {
+            if (xhr.status == 401)
+                window.location.href = '@Url.Action("Login","Account")';
+            else if (xhr.status == 403)
+                alert("Недостаточно прав для совершения действия!");
+        });
+    </script>
+   
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/manual")
+    
     @RenderSection("scripts", required: false)
 </body>
 </html>

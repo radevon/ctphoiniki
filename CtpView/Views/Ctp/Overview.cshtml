@@ -1,80 +1,63 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@model IEnumerable<AddressCtpData>
+
 
 <div class="jumbotron">
     <h2 class="text-primary"><span class="glyphicon glyphicon-list"></span>&nbsp;Общий вид</h2>
-    <p class="text-muted">Последние данные, полученные с объектов</p>
+    <p class="text-muted">Последние данные, полученные со всех объектов</p>
 </div>
-
 
 <div class="row">
-    <div class="col-md-12" id="DataContent">
-        <table class="table table-condensed table-hover">
-            <thead>
-                <tr>
-
-                    <th>Identity</th>
-                    <th>Наимен</th>
-                    <th>Адрес</th>
-                    <th>Время получ</th>
-                    <th>T<sub>под</sub>, &deg;C</th>
-                    <th>T<sub>обр</sub>, &deg;C</th>
-                    <th>T<sub>возд</sub>, &deg;C</th>
-                    <th>P<sub>1</sub>, МПа</th>
-                    <th>P<sub>2</sub>, МПа</th>
-                    <th>P<sub>3</sub>, МПа</th>
-                    <th>P<sub>4</sub>, МПа</th>
-                    <th>Насос</th>
-                    <th>Заслонка</th>
-                    <th>Сообщение</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (AddressCtpData p in Model)
-                {
-                    <tr>
-
-                        <td class="text-muted">@p.BindingId</td>
-                        <td><a href='@Url.Action("DetailsAddress", "Ctp", new {Id=p.Id})' target="_self" style="font-weight:bold">@p.ObjectName</a></td>
-                        <td>@p.Addres</td>
-                        <td style="font-size:11px">@(p.RecvDate.HasValue ? p.RecvDate.Value.ToString("dd MMM yyyy, HH:mm:ss") : "-")</td>
-                        <td>@(p.Temp1.HasValue ? p.Temp1.Value.ToString("0.0") : "-")</td>
-                        <td>@(p.Temp2.HasValue ? p.Temp2.Value.ToString("0.0") : "-")</td>
-                        <td>@(p.Temp3.HasValue ? p.Temp3.Value.ToString("0.0") : "-")</td>
-                        <td>@(p.Pressure1.HasValue ? p.Pressure1.Value.ToString("0.0#") : "-")</td>
-                        <td>@(p.Pressure2.HasValue ? p.Pressure2.Value.ToString("0.0#") : "-")</td>
-                        <td>@(p.Pressure3.HasValue ? p.Pressure3.Value.ToString("0.0#") : "-")</td>
-                        <td>@(p.Pressure4.HasValue ? p.Pressure4.Value.ToString("0.0#") : "-")</td>
-                        <td>@if (p.PumpStatus.HasValue) {
-                                @(p.PumpStatus.Value ? Html.Raw("<span class='label label-success'>вкл&nbsp;</span>") : Html.Raw("<span class='label label-danger'>выкл</span>"))
-                            }
-                            else
-                            {
-                                @:-
-                            }
-                        </td>
-                        <td>@if (p.ValveStatus.HasValue)
-                            {
-                                switch (p.ValveStatus.Value)
-                                {
-                                    case -1: <text>закр</text>; break;
-                                    case 0: <text>покой</text> break;
-                                    case 1: <text>откр</text> break;
-                                    default: <text>неизв</text> break;
-                                }
-                            }
-                            else
-                            {
-                                @:-
-                            }
-                        </td>
-                        <td title="@Html.DisplayFor(x=>p.Message)" style="color:#ff8585; font-size:10px">@if (p.Message != null)
-                        {@(p.Message.Length > 20 ? p.Message.Substring(0, 20) + "..." : p.Message)}</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="col-md-12 col-sm-12 col-xs-12" style=" margin-bottom:10px;">
+        <span class="text-muted">Следующее обновление через:</span><span id="timer"></span> сек
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12" id="DataContent">
+       @Html.Action("LoadLastData")
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        function displayTime(sec) {
+            $('#timer').text(sec);
+        }
+
+        function reloadLastData() {
+            
+            $.ajax('@Url.Action("LoadLastData","Ctp")', {
+                method: 'GET',
+                data: {},
+                beforeSend: function () {
+
+                    loading(true);
+                },
+                success: function (data, status) {
+                    $("#DataContent").html(data);
+                    loading(false);
+                    counter = 1;
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#DataContent").html('При опросе сервера возникла ошибка! Свяжитесь с разработчиком');
+                    loading(false);
+                    counter = 1;
+                }
+            });
+        }
+
+        var timeUpdate = 30;
+        var counter = 1;
+
+        setInterval(function () { if (counter <= timeUpdate) { displayTime(timeUpdate - counter); counter++; } }, 1000);
+
+        setInterval(function () {
+            reloadLastData();
+        }, timeUpdate * 1000);
+
+       
+    </script>
+}
