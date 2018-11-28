@@ -42,6 +42,49 @@
 }
 
 
+.param-title{
+    display:block;
+    margin:3px;
+    font-size:14px;
+    text-transform:uppercase;
+    text-align:center;
+    color:#5d6669;
+}
+
+.param-value {
+    display:block;
+    padding:3px;
+    font-size:26px;
+    font-family:monospace;
+    border:1px solid lightgray;
+    border-radius:10px;
+    overflow:hidden;
+    text-align:center;
+    font-weight:bold;
+    background-color: #fcfcfc;
+    color: #5d6669;
+    text-shadow: 2px 1px 2px #cad772;
+    min-height:35px;
+}
+
+.param-time{
+    display:block;
+    color:#a7b171;
+    padding:3px;
+    font-size:20px;
+    font-family:Arial monospace;
+    text-align:center;
+    font-weight:bold;
+}
+
+.timetoupdate{
+    margin:3px;
+    padding:5px;
+    font-size:22px;
+    border:1px solid #a3e0be;
+    border-radius:50%;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,

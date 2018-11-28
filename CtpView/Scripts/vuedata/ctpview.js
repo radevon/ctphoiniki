@@ -55,7 +55,7 @@
                 pressure4: 21.2,
                 pumpstatus: true,
                 valvestatus: 0,
-                message: null
+                message: 'Ошибка по датчику давления!'
                 },
                 {
                     id: 2,
@@ -73,6 +73,8 @@
                     message: 'dfgfg'
                 }
             ];
+
+            this.currentSec = 0;
         }
 
     },
@@ -86,12 +88,77 @@
         },
         dataLength: function () {
             return this.parameters.length;
+        },
+        pumpStatusText: function () {
+            
+            var status=this.lastData.pumpstatus;
+            if (status == null) {
+                return "<span class='label label-default'>неизв</span>"
+            }
+            if (status) {
+                return "<span class='label label-success'>вкл</span>";
+            }else
+            {
+                return "<span class='label label-danger'>выкл</span>"
+            }
+        },
+
+        valveStatusText: function () {
+
+            var status = this.lastData.valvestatus;
+            if (status == null) {
+                return "<span class='label label-default'>неизв</span>"
+            }
+            if (status>0) {
+                return "<span class='label label-success'>откр</span>";
+            } else if(status<0){
+                return "<span class='label label-danger'>закр</span>"
+            }else
+            {
+                return "<span class='label label-info'>покой</span>"
+            }
         }
 
 
     },
     created: function () {
-        this.fetchData();
+        this.currentSec = 0;
+
+        var self = this;
+        self.fetchData();
+        // таймер времени до обновления
+        setInterval(function () {
+            if (self.currentSec < self.updatetimeout / 1000)
+                self.currentSec++;
+        }, 1000);
+
+
+        setInterval(function () {
+            self.fetchData();
+        }, self.updatetimeout);
+        
     },
     template: '#templ'
+});
+
+
+Vue.filter("fixed", function (value, decimal) {
+    if (value !== null && value !== undefined && !isNaN(value)) {
+        if (decimal && !isNaN(decimal)) {
+            return value.toFixed(decimal);
+        } else {
+            return value;
+        }
+    } else
+        return null;
+
+});
+
+Vue.filter('dateformat', function (value, format) {
+    if (moment(value).isValid()) {
+        return moment(value).tz("Europe/Minsk").format(format);
+    }
+    else
+        return value;
+
 });

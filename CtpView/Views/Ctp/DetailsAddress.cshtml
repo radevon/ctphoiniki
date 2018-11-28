@@ -1,26 +1,168 @@
 ﻿@model DapperAbstract.Address
 
 @{
-    ViewBag.Title = "DetailsAddress";
+    ViewBag.Title = "Подробная информация по ЦТП";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="jumbotron">
+<div class="jumbotron" style="margin-bottom:10px;">
     <h2 class="text-primary"><span class="glyphicon glyphicon-home"></span>&nbsp;@Model.ObjectName</h2>
     <p class="text-muted">@Model.Addres</p>
 </div>
 
 
 <div id="CtpDetails">
-    <ctp bindingid="@Model.BindingId" datainterval="360" updatetimeout="30000"></ctp>
+    <ctp bindingid="@Model.BindingId" datainterval="0.5" updatetimeout="30000"></ctp>
 
 </div>
 
 
 <template id="templ">
     <div>
-        {{lastData.temp1}}
-    </div>    
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="text-center text-muted">
+                Обновление через:<span class="timetoupdate">{{updatetimeout/1000-currentSec}}</span> сек
+            </div>
+           </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12"><h2 class="text-primary text-center">Последние полученные показания</h2></div>
+
+        </div>
+        <div class="well well-sm" style="background-color: #f8f9f4">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6">
+                    <span class="param-title">Дата/время</span>
+                    <span class="param-time">{{lastData.recvdate|dateformat('DD MMM, HH:mm:ss')}}</span>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-2 col-md-offset-3 col-sm-4 col-xs-12">
+                    <span class="param-title">
+                        T<sub>под</sub>
+                    </span>
+                    <span class="param-value">    {{lastData.temp1|fixed(1)}} </span>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-12">
+                    <span class="param-title">
+                        T<sub>обр</sub>
+                    </span>
+                    <span class="param-value">{{lastData.temp2|fixed(1)}}</span>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-12">
+                    <span class="param-title">
+                        T<sub>воз</sub>
+                    </span>
+                    <span class="param-value">{{lastData.temp3|fixed(1)}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-md-offset-2 col-sm-3 col-xs-6">
+                    <span class="param-title">
+                        Давление 1
+                    </span>
+                    <span class="param-value">{{lastData.pressure1|fixed(2)}}</span>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-6">
+                    <span class="param-title">
+                        Давление 2
+                    </span>
+                    <span class="param-value">{{lastData.pressure2|fixed(2)}}</span>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-6">
+                    <span class="param-title">
+                        Давление 3
+                    </span>
+                    <span class="param-value">{{lastData.pressure3|fixed(2)}}</span>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-6">
+                    <span class="param-title">
+                        Давление 4
+                    </span>
+                    <span class="param-value">{{lastData.pressure4|fixed(2)}}</span>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-2 col-md-offset-4 col-sm-4 col-sm-offset-2 col-xs-6">
+                    <span class="param-title">
+                        Насос
+                    </span>
+                    <span class="param-value" v-html="pumpStatusText"></span>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="param-title">
+                        Заслонка
+                    </span>
+                    <span class="param-value" v-html="valveStatusText"></span>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <span class="param-title">
+                        Сообщение
+                    </span>
+                    {{lastData.message}}
+                </div>
+            </div>
+        </div>
+       
+
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3 class="text-primary text-center">Данные за последние {{datainterval*60}} мин</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div style="max-height:450px">
+
+
+                            <table class="table table-condensed table-bordered" style="background-color:#fff; margin-bottom:5px">
+                                <thead>
+                                    <tr>
+                                        <th title="Время получения данных">Время</th>
+                                        <th title="Температура подачи">T<sub>под</sub></th>
+                                        <th title="Температура обратки">T<sub>обр</sub></th>
+                                        <th title="Температура воздуха">T<sub>воз</sub></th>
+                                        <th title="Давление">P<sub>1</sub></th>
+                                        <th title="Давление">P<sub>2</sub></th>
+                                        <th title="Давление">P<sub>3</sub></th>
+                                        <th title="Давление">P<sub>4</sub></th>
+                                        <th title="Состояние насоса">Насос</th>
+                                        <th title="Состояние заслонки">Засл</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in parameters">
+                                        <td title="Время получения данных">{{item.recvdate|dateformat('DD MMM, HH:mm:ss')}}</td>
+                                        <td title="Температура подачи">{{item.temp1|fixed(1)}}</td>
+                                        <td title="Температура обратки">{{item.temp2|fixed(1)}}</td>
+                                        <td title="Температура воздуха">{{item.temp3|fixed(1)}}</td>
+                                        <td title="Давление">{{item.pressure1|fixed(2)}}</td>
+                                        <td title="Давление">{{item.pressure2|fixed(2)}}</td>
+                                        <td title="Давление">{{item.pressure3|fixed(2)}}</td>
+                                        <td title="Давление">{{item.pressure4|fixed(2)}}</td>
+                                        <td title="Состояние насоса">hghjg</td>
+                                        <td title="Состояние заслонки">r</td>
+                                    </tr>
+                                    <tr v-if="dataLength==0">
+                                        <td colspan="10" class="text-muted text-center">информация отсутствует</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
 </template>
 
 
