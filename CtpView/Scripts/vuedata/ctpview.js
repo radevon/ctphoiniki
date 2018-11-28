@@ -55,7 +55,7 @@
                 pressure4: 21.2,
                 pumpstatus: true,
                 valvestatus: 0,
-                message: 'Ошибка по датчику давления!'
+                message: 'kh'
                 },
                 {
                     id: 2,
@@ -75,6 +75,35 @@
             ];
 
             this.currentSec = 0;
+        },
+
+        pumpStatusText: function (val) {
+            
+                var status=val;
+                if (status == null) {
+                    return "<span class='label label-default'>неизв</span>"
+                }
+                if (status) {
+                    return "<span class='label label-success'>вкл</span>";
+                }else
+                {
+                    return "<span class='label label-danger'>выкл</span>"
+                }
+        },
+
+        valveStatusText: function (val) {
+
+            var status = val;
+            if (status == null) {
+                return "<span class='label label-default'>неизв</span>"
+            }
+            if (status > 0) {
+                return "<span class='label label-success'>откр</span>";
+            } else if (status < 0) {
+                return "<span class='label label-danger'>закр</span>"
+            } else {
+                return "<span class='label label-info'>покой</span>"
+            }
         }
 
     },
@@ -88,35 +117,6 @@
         },
         dataLength: function () {
             return this.parameters.length;
-        },
-        pumpStatusText: function () {
-            
-            var status=this.lastData.pumpstatus;
-            if (status == null) {
-                return "<span class='label label-default'>неизв</span>"
-            }
-            if (status) {
-                return "<span class='label label-success'>вкл</span>";
-            }else
-            {
-                return "<span class='label label-danger'>выкл</span>"
-            }
-        },
-
-        valveStatusText: function () {
-
-            var status = this.lastData.valvestatus;
-            if (status == null) {
-                return "<span class='label label-default'>неизв</span>"
-            }
-            if (status>0) {
-                return "<span class='label label-success'>откр</span>";
-            } else if(status<0){
-                return "<span class='label label-danger'>закр</span>"
-            }else
-            {
-                return "<span class='label label-info'>покой</span>"
-            }
         }
 
 

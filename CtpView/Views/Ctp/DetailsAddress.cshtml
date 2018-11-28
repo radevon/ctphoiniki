@@ -91,22 +91,24 @@
                     <span class="param-title">
                         Насос
                     </span>
-                    <span class="param-value" v-html="pumpStatusText"></span>
+                    <span class="param-value" v-html="pumpStatusText(lastData.pumpstatus)"></span>
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-6">
                     <span class="param-title">
                         Заслонка
                     </span>
-                    <span class="param-value" v-html="valveStatusText"></span>
+                    <span class="param-value" v-html="valveStatusText(lastData.valvestatus)"></span>
                 </div>
 
             </div>
-            <div class="row">
+            <div class="row" v-if="lastData.message">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <span class="param-title">
                         Сообщение
                     </span>
-                    {{lastData.message}}
+                    <span class="error-msg-text">
+                        {{lastData.message}}
+                    </span>
                 </div>
             </div>
         </div>
@@ -149,8 +151,8 @@
                                         <td title="Давление">{{item.pressure2|fixed(2)}}</td>
                                         <td title="Давление">{{item.pressure3|fixed(2)}}</td>
                                         <td title="Давление">{{item.pressure4|fixed(2)}}</td>
-                                        <td title="Состояние насоса">hghjg</td>
-                                        <td title="Состояние заслонки">r</td>
+                                        <td title="Состояние насоса" v-html="pumpStatusText(item.pumpstatus)"></td>
+                                        <td title="Состояние заслонки" v-html="valveStatusText(item.valvestatus)"></td>
                                     </tr>
                                     <tr v-if="dataLength==0">
                                         <td colspan="10" class="text-muted text-center">информация отсутствует</td>

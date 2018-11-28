@@ -77,6 +77,16 @@
     font-weight:bold;
 }
 
+.error-msg-text{
+    display:block;
+    padding:15px;
+    background-color:#fff;
+    border: 2px solid #fd9696;
+border-radius: 12px;
+text-align: center;
+/*box-shadow: inset 0px 0px 15px 1px #fa5c2f;*/
+}
+
 .timetoupdate{
     margin:3px;
     padding:5px;
