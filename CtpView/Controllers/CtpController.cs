@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CtpView.Controllers
 {
+    //[ApplicationAuthorize]
     public class CtpController : Controller
     {
         CtpSqlRepository repo = new CtpSqlRepository(ConfigurationManager.ConnectionStrings["CtpData"].ConnectionString);
@@ -46,6 +47,12 @@ namespace CtpView.Controllers
                 return View("DisplayMessage", (object)"<span class='text-danger'>Объект с таким идентификатором не обнаружен в базе данных!</span>");
             }
             return View(addr);
+        }
+
+        public ActionResult CtpData(string BindingId,DateTime from, DateTime to)
+        {
+            List<CtpParameters> data = repo.GetCtpParameters(BindingId, from,to).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 	}
 }

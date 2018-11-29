@@ -73,6 +73,14 @@ namespace DapperAbstract
                 }
             }
 
+            public IEnumerable<CtpParameters> GetCtpParameters(string BindingId, DateTime from, DateTime to)
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.GetListPaged<CtpParameters>(1, 3000, "where BindingId=@BindingId_ and RecvDate between @start and @end", "RecvDate desc", new { BindingId_ = BindingId, start = from, end = to });
+                }
+            }
+
             public int? InsertCtpParameter(CtpParameters new_)
             {
                 using (SqlConnection connection = new SqlConnection(this.ConnectionString))

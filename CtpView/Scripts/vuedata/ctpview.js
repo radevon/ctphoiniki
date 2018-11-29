@@ -40,41 +40,60 @@
                 };
         },
 
-        fetchData: function () {
-            this.parameters = [
-                {
-                id: 1,
-                bindingid: 2,
-                recvdate: new Date(),
-                temp1: 12.35,
-                temp2: 11.34,
-                temp3: 22,
-                pressure1: 23.56,
-                pressure2: 33.546645,
-                pressure3: 2.344,
-                pressure4: 21.2,
-                pumpstatus: true,
-                valvestatus: 0,
-                message: 'kh'
-                },
-                {
-                    id: 2,
-                    bindingid: 2,
-                    recvdate: new Date(),
-                    temp1: 72.035,
-                    temp2: 1.2,
-                    temp3: 23.76,
-                    pressure1: 3.506,
-                    pressure2: 2.6645,
-                    pressure3: 32.344,
-                    pressure4: 221.2,
-                    pumpstatus: true,
-                    valvestatus: 0,
-                    message: 'dfgfg'
-                }
-            ];
+        getIntervalDate: function () {
+            var curr = new Date(), prev;
 
-            this.currentSec = 0;
+            if (this.datainterval != undefined) {
+                prev = new Date(curr - this.datainterval * 60 * 60 * 1000);
+            }
+            else {
+                prev = new Date(curr - 0.5 * 60 * 60 * 1000);
+            }
+            return {
+                start: prev,
+                end: curr
+            }
+        },
+
+
+        fetchData: function () {
+            var self=this;
+            var interv = this.getIntervalDate();
+            $.ajax({
+                url: ajaxBasePath + '/Ctp/CtpData',
+                    type: 'GET',
+                    data: { BindingId: this.bindingid, from: moment(interv.start).tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"), to: moment(interv.end).tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss") },
+                    success: function (data, status) {
+                        self.updateTime = new Date();
+
+                        self.parameters = data.map(function (e, i) {
+                            return {
+                                id: e.Id,
+                                bindingid: e.BindingId,
+                                recvdate: new Date(parseInt(e.RecvDate.substr(6))),
+                                temp1: e.Temp1,
+                                temp2: e.Temp2,
+                                temp3: e.Temp3,
+                                pressure1: e.Pressure1,
+                                pressure2: e.Pressure2,
+                                pressure3: e.Pressure3,
+                                pressure4: e.Pressure4,
+                                pumpstatus: e.PumpStatus,
+                                valvestatus: e.ValveStatus,
+                                message: e.Message
+                            };
+                        
+                        });
+                        self.currentSec = 0;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        self.updateTime = new Date();
+                        self.currentSec = 0;
+                        console.error("Ошибка при запросе данных по показаниям");
+
+                    }
+            }); // ajax close
+      
         },
 
         pumpStatusText: function (val) {
@@ -125,6 +144,7 @@
         this.currentSec = 0;
 
         var self = this;
+        
         self.fetchData();
         // таймер времени до обновления
         setInterval(function () {

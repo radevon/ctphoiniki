@@ -22,7 +22,7 @@
 
 
     <script type="text/javascript">
-        
+        var ajaxBasePath = '@String.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~")).TrimEnd('/')';
         $(function () {
             moment.locale('ru')
         })
