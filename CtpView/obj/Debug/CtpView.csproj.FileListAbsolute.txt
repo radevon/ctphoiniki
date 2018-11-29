@@ -66,3 +66,8 @@ D:\code\.NET\ctphoiniki\CtpView\bin\Dapper.xml
 D:\code\.NET\ctphoiniki\CtpView\obj\Debug\CtpView.csprojResolveAssemblyReference.cache
 D:\code\.NET\ctphoiniki\CtpView\obj\Debug\CtpView.dll
 D:\code\.NET\ctphoiniki\CtpView\obj\Debug\CtpView.pdb
+E:\dev\vs\Ctp\CtpView\bin\Microsoft.Web.Helpers.dll
+E:\dev\vs\Ctp\CtpView\bin\WebMatrix.Data.dll
+E:\dev\vs\Ctp\CtpView\bin\WebMatrix.WebData.dll
+E:\dev\vs\Ctp\CtpView\bin\WebMatrix.Data.xml
+E:\dev\vs\Ctp\CtpView\bin\WebMatrix.WebData.xml

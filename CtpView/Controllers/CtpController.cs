@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace CtpView.Controllers
 {
-    //[ApplicationAuthorize]
+    [ApplicationAuthorize]
     public class CtpController : Controller
     {
         CtpSqlRepository repo = new CtpSqlRepository(ConfigurationManager.ConnectionStrings["CtpData"].ConnectionString);
