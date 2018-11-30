@@ -1,0 +1,7 @@
+E:\dev\vs\Ctp\CtpAdd\bin\Debug\CtpAdd.dll
+E:\dev\vs\Ctp\CtpAdd\bin\Debug\CtpAdd.pdb
+E:\dev\vs\Ctp\CtpAdd\bin\Debug\Dapper.dll
+E:\dev\vs\Ctp\CtpAdd\bin\Debug\Dapper.xml
+E:\dev\vs\Ctp\CtpAdd\obj\Debug\CtpAdd.csprojResolveAssemblyReference.cache
+E:\dev\vs\Ctp\CtpAdd\obj\Debug\CtpAdd.dll
+E:\dev\vs\Ctp\CtpAdd\obj\Debug\CtpAdd.pdb

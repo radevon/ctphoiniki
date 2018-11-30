@@ -93,6 +93,8 @@ text-align: center;
     font-size:22px;
     border:1px solid #a3e0be;
     border-radius:50%;
+    display:inline-block;
+    width:40px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -125,4 +127,17 @@ input[type="checkbox"].input-validation-error {
 
 .validation-summary-valid {
     display: none;
+}
+
+
+@media(min-width:1300px){
+    .flowtime{
+        position: fixed;
+        background-color: rgba(254, 254, 254, 0.8);
+        z-index: 10;
+        border-radius: 5px;
+        padding: 2px;
+        top: 55px;
+        left: 3px;
+    }
 }

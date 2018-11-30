@@ -36,5 +36,11 @@ namespace CtpView.Controllers
             return View(user);
         }
 
+        public ActionResult Logout()
+        {
+            WebSecurity.Logout();
+            return RedirectToAction("Login");
+        }
+
 	}
 }
