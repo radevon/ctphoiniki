@@ -71,3 +71,8 @@ E:\dev\vs\Ctp\CtpView\bin\WebMatrix.Data.dll
 E:\dev\vs\Ctp\CtpView\bin\WebMatrix.WebData.dll
 E:\dev\vs\Ctp\CtpView\bin\WebMatrix.Data.xml
 E:\dev\vs\Ctp\CtpView\bin\WebMatrix.WebData.xml
+D:\code\.NET\ctphoiniki\CtpView\bin\Microsoft.Web.Helpers.dll
+D:\code\.NET\ctphoiniki\CtpView\bin\WebMatrix.Data.dll
+D:\code\.NET\ctphoiniki\CtpView\bin\WebMatrix.WebData.dll
+D:\code\.NET\ctphoiniki\CtpView\bin\WebMatrix.Data.xml
+D:\code\.NET\ctphoiniki\CtpView\bin\WebMatrix.WebData.xml

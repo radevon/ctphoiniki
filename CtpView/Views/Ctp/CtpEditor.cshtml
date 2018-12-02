@@ -1,0 +1,71 @@
+﻿@model IEnumerable<DapperAbstract.Address>
+
+@{
+    ViewBag.Title = "Рерактор объектов ЦТП";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="text-primary">Список ЦТП</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Адрес
+            </th>
+            <th>
+                Идентификатор данных
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ObjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Addres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BindingId)
+                </td>
+                <td>
+                    @Html.ActionLink("Удалить", "DeleteCtp", new { id = item.Id }, new { @class = "btn btn-xs btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        @using (Html.BeginForm("AddAddress","Ctp",FormMethod.Post)) { 
+        <tr>
+            <td colspan="4" class="text-center text-muted">
+                добавление нового объекта
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.TextBox("ObjectName", "", new { @class="form-control", placeholder="Наименование", required="required"})
+                
+            </td>
+            <td>
+                @Html.TextBox("Addres", "", new { @class = "form-control", placeholder = "Адрес" })
+            </td>
+            <td>
+                @Html.TextBox("BindingId", "", new { @class = "form-control", placeholder = "Идентификатор", required = "required" })
+            </td>
+            <td>
+                @Html.AntiForgeryToken()
+                <input type="submit" class="btn btn-success" value="Добавить"/>
+            </td>
+        </tr>
+        }
+    </tfoot>
+
+</table>

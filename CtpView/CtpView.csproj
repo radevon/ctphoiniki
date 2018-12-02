@@ -192,6 +192,7 @@
     <Content Include="Views\Shared\DisplayMessage.cshtml" />
     <Content Include="Views\Ctp\LoadLastData.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Ctp\CtpEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DapperAbstract\DapperAbstract.csproj">

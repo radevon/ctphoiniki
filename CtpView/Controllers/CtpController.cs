@@ -54,5 +54,45 @@ namespace CtpView.Controllers
             List<CtpParameters> data = repo.GetCtpParameters(BindingId, from,to).ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        [Authorize(Roles="editors")]
+        public ActionResult CtpEditor()
+        {
+            List<Address> addresess = repo.GetCtpAddresses().OrderBy(x => x.ObjectName).ThenBy(x => x.Addres).ToList();
+            return View(addresess);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "editors")]
+        public ActionResult AddAddress(Address new_)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    int? inserted = repo.InsertNewAddress(new_);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return RedirectToAction("CtpEditor");
+        }
+
+        [Authorize(Roles = "editors")]
+        public ActionResult DeleteCtp(int Id)
+        {
+            try
+            {
+                int removed=repo.RemoveAddress(Id);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return RedirectToAction("CtpEditor");
+        }
 	}
 }
