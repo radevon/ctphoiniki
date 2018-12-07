@@ -37,6 +37,14 @@ namespace DapperAbstract
                 }
             }
 
+            public Address GetCtpAddressByBindingId(string BindingId)
+            {
+                using (SqlConnection connection = new SqlConnection(this.ConnectionString))
+                {
+                    return connection.GetList<Address>(new { BindingId = BindingId }).FirstOrDefault();
+                }
+            }
+
             public int? InsertNewAddress(Address new_)
             {
                 using (SqlConnection connection = new SqlConnection(this.ConnectionString))

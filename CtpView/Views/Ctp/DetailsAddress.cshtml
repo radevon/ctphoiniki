@@ -117,7 +117,8 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <h3 class="text-primary text-center">Данные за последние {{datainterval*60}} мин</h3>
+                        <h3 class="text-primary text-center">Данные за последние {{datainterval*60}} мин <a class="btn btn-sm btn-default pull-right" href="@Url.Action( "Archive", "Ctp", new { BindingId = @Model.BindingId })" target="_self"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Архив</a></h3>
+                        
                     </div>
                 </div>
 

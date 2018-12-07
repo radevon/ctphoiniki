@@ -94,5 +94,17 @@ namespace CtpView.Controllers
             }
             return RedirectToAction("CtpEditor");
         }
+
+
+        public ActionResult Archive(string BindingId)
+        {
+            Address current = repo.GetCtpAddressByBindingId(BindingId);
+            if (current != null)
+            {
+                return View(current);
+            }
+            else
+                return HttpNotFound();
+        }
 	}
 }

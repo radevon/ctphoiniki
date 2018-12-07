@@ -19,3 +19,4 @@ E:\dev\vs\Ctp\DapperAbstract\bin\Debug\Dapper.SimpleCRUD.pdb
 E:\dev\vs\Ctp\DapperAbstract\bin\Debug\Dapper.SimpleCRUD.xml
 E:\dev\vs\Ctp\DapperAbstract\obj\Debug\DapperAbstract.dll
 E:\dev\vs\Ctp\DapperAbstract\obj\Debug\DapperAbstract.pdb
+E:\dev\vs\Ctp\DapperAbstract\obj\Debug\DapperAbstract.csprojResolveAssemblyReference.cache
