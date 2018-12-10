@@ -1,13 +1,18 @@
 ﻿@model DapperAbstract.Address
 
 @{
-    ViewBag.Title = "Archive";
+    ViewBag.Title = "Архив показаний по ЦТП";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Archive</h2>
+@section Css{
+    <link rel="stylesheet" href='@Url.Content("~/Content/bootstrap-datetimepicker.min.css")' />
+}
 
-<div>
+<h4 class="text-center text-primary">Архив показаний по ЦТП</h4>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
     <h4>Address</h4>
 	<hr />
     <dl class="dl-horizontal">
@@ -36,8 +41,42 @@
         </dd>
 
     </dl>
+        </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+
+        <div class="text-muted">Выбрать показания на дату:</div>
+        <input name="HistoryDate" class="form-control" id="HistoryDate" type="text" placeholder="Дата" style="margin-bottom:10px" />
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12" id="HistoryData">
+        <h4 class="text-center text-danger">Выберите дату, на которую желаете получить информацию</h4>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src='@Url.Content("~/Scripts/bootstrap-datetimepicker.min.js")'></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#HistoryDate").datetimepicker(
+            {
+                locale:'ru',
+                defaultDate: false,
+                format: 'DD.MM.YYYY'
+
+            }).on('dp.change', function (e) {
+                //alert(e.date.tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"));
+                //console.log(e);
+                // e.date is a moment object
+                @*GetHistoryData(@Model.DeviceId,@Model.GroupId,e.date.tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"));  *@
+            });
+        })
+    </script>
+
+}
