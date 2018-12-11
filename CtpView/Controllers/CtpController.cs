@@ -106,5 +106,13 @@ namespace CtpView.Controllers
             else
                 return HttpNotFound();
         }
+
+
+        public ActionResult GetArchiveData(string BindingId, DateTime day)
+        {
+            IEnumerable<CtpParameters> parameters = repo.GetCtpParameters(BindingId, day);
+            return PartialView(parameters);
+            
+        }
 	}
 }

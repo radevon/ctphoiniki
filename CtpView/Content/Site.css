@@ -97,6 +97,10 @@ text-align: center;
     width:40px;
 }
 
+#HistoryDate{
+    display:inline-block;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,

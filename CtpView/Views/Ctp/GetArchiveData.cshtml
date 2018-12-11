@@ -1,0 +1,102 @@
+﻿@model IEnumerable<DapperAbstract.CtpParameters>
+
+<table class="table table-condensed table-hover table-bordered">
+    <thead>
+        <tr>
+
+            <th>
+                Время
+            </th>
+            <th>
+                T<sub>под</sub>
+            </th>
+            <th>
+                T<sub>обр</sub>
+            </th>
+            <th>
+                T<sub>воз</sub>
+            </th>
+            <th>
+                P<sub>1</sub>
+            </th>
+            <th>
+                P<sub>2</sub>
+            </th>
+            <th>
+                P<sub>3</sub>
+            </th>
+            <th>
+                P<sub>4</sub>
+            </th>
+            <th>
+                Сост насоса
+            </th>
+            <th>
+                Сост клапана
+            </th>
+            <th>
+                Прочее
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (CtpParameters p in Model)
+            {
+                <tr>
+
+                    <td style="font-size:11px">@p.RecvDate.ToString("dd MMM yyyy, HH:mm:ss")</td>
+                    <td>@(p.Temp1.HasValue ? p.Temp1.Value.ToString("0.0") : "-")</td>
+                    <td>@(p.Temp2.HasValue ? p.Temp2.Value.ToString("0.0") : "-")</td>
+                    <td>@(p.Temp3.HasValue ? p.Temp3.Value.ToString("0.0") : "-")</td>
+                    <td>@(p.Pressure1.HasValue ? p.Pressure1.Value.ToString("0.0#") : "-")</td>
+                    <td>@(p.Pressure2.HasValue ? p.Pressure2.Value.ToString("0.0#") : "-")</td>
+                    <td>@(p.Pressure3.HasValue ? p.Pressure3.Value.ToString("0.0#") : "-")</td>
+                    <td>@(p.Pressure4.HasValue ? p.Pressure4.Value.ToString("0.0#") : "-")</td>
+                    <td>
+                        @if (p.PumpStatus.HasValue)
+                        {
+                            @(p.PumpStatus.Value ? Html.Raw("<span class='text-success'>вкл&nbsp;</span>") : Html.Raw("<span class='text-danger'>выкл</span>"))
+                        }
+                        else
+                        {
+                            @:-
+                            }
+                    </td>
+                    <td>
+                        @if (p.ValveStatus.HasValue)
+                        {
+                            switch (p.ValveStatus.Value)
+                            {
+                                case -1: <text>закр</text>; break;
+                                case 0: <text>покой</text> break;
+                                case 1: <text>откр</text> break;
+                                default: <text>неизв</text> break;
+                            }
+                        }
+                        else
+                        {
+                            @:-
+                            }
+                    </td>
+                    <td title="@Html.DisplayFor(x=>p.Message)" style="color:#ff8585; font-size:10px">
+                        @if (p.Message != null)
+                        {@(p.Message.Length > 20 ? p.Message.Substring(0, 20) + "..." : p.Message)}
+                    </td>
+
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+
+                <td colspan="11" class="text-center text-muted">
+                    на выбранную дату данные отсутствуют
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

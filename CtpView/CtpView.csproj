@@ -200,6 +200,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Ctp\CtpEditor.cshtml" />
     <Content Include="Views\Ctp\Archive.cshtml" />
+    <Content Include="Views\Ctp\GetArchiveData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DapperAbstract\DapperAbstract.csproj">

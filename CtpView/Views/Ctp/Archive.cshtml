@@ -9,39 +9,13 @@
     <link rel="stylesheet" href='@Url.Content("~/Content/bootstrap-datetimepicker.min.css")' />
 }
 
-<h4 class="text-center text-primary">Архив показаний по ЦТП</h4>
+<h3 class="text-center text-primary">Архив показаний по ЦТП</h3>
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-    <h4>Address</h4>
+    <div title="@Model.BindingId" style="color:#3d3d3d; font-size:24px">@Html.ActionLink(Model.ObjectName, "DetailsAddress", "Ctp", new {id=Model.Id },null), <span class="text-muted" style="font-size:16px">@Model.Addres</span></div>
 	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ObjectName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ObjectName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Addres)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Addres)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BindingId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BindingId)
-        </dd>
-
-    </dl>
-        </div>
+       
 </div>
 
 
@@ -49,7 +23,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12 text-center">
 
         <div class="text-muted">Выбрать показания на дату:</div>
-        <input name="HistoryDate" class="form-control" id="HistoryDate" type="text" placeholder="Дата" style="margin-bottom:10px" />
+        <input name="HistoryDate" class="form-control" id="HistoryDate" autocomplete="off" type="text" placeholder="Дата" style="margin-bottom:10px" />
 
     </div>
 </div>
@@ -63,6 +37,26 @@
 @section Scripts {
     <script type="text/javascript" src='@Url.Content("~/Scripts/bootstrap-datetimepicker.min.js")'></script>
     <script type="text/javascript">
+
+        function LoadHistory(BindingId,day) {
+            loading(true);
+
+            $.ajax({
+                url: '@Url.Action("GetArchiveData","Ctp")',
+                type: 'GET',
+                data: { 'BindingId': BindingId,'Day': day },
+                success: function (data, status) {
+                    $("#HistoryData").html(data);
+                    loading(false);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#HistoryData").html('Ошибка при получении данных!');
+                    loading(false);
+                }
+            });
+
+        }
+
         $(function () {
             $("#HistoryDate").datetimepicker(
             {
@@ -74,7 +68,7 @@
                 //alert(e.date.tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"));
                 //console.log(e);
                 // e.date is a moment object
-                @*GetHistoryData(@Model.DeviceId,@Model.GroupId,e.date.tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"));  *@
+                LoadHistory('@Model.BindingId',e.date.tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss")); 
             });
         })
     </script>
