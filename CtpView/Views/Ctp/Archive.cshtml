@@ -24,9 +24,16 @@
 
         <div class="text-muted">Выбрать показания на дату:</div>
         <input name="HistoryDate" class="form-control" id="HistoryDate" autocomplete="off" type="text" placeholder="Дата" style="margin-bottom:10px" />
-
+        
     </div>
 </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+            <label><input type="radio" name="dayPart" value="0" checked /> начало суток </label>&nbsp;(00:00 - 12:00)
+            <br/>
+            <label><input type="radio" name="dayPart" value="1" /> конец суток </label>&nbsp;(12:00 - 00:00)
+        </div>
+    </div>
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12" id="HistoryData">
@@ -38,13 +45,13 @@
     <script type="text/javascript" src='@Url.Content("~/Scripts/bootstrap-datetimepicker.min.js")'></script>
     <script type="text/javascript">
 
-        function LoadHistory(BindingId,day) {
+        function LoadHistory(BindingId,day,dayPart) {
             loading(true);
 
             $.ajax({
                 url: '@Url.Action("GetArchiveData","Ctp")',
                 type: 'GET',
-                data: { 'BindingId': BindingId,'Day': day },
+                data: { 'BindingId': BindingId, 'Day': day, 'dayPart': dayPart },
                 success: function (data, status) {
                     $("#HistoryData").html(data);
                     loading(false);
@@ -60,17 +67,18 @@
         $(function () {
             $("#HistoryDate").datetimepicker(
             {
-                locale:'ru',
+                locale: 'ru',
                 defaultDate: false,
                 format: 'DD.MM.YYYY'
 
             }).on('dp.change', function (e) {
-                //alert(e.date.tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"));
-                //console.log(e);
-                // e.date is a moment object
-                LoadHistory('@Model.BindingId',e.date.tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss")); 
+                LoadHistory('@Model.BindingId', e.date.tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"), $("input[name='dayPart']:checked").val()); 
             });
-        })
+
+            $("input[name='dayPart']").change(function () {
+                LoadHistory('@Model.BindingId', moment($("#HistoryDate").val(), 'DD.MM.YYYY').tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"), $("input[name='dayPart']:checked").val());
+            });
+        });
     </script>
 
 }

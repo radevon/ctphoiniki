@@ -41,6 +41,9 @@
     display:none;
 }
 
+table.table{
+    background-color:#fff;
+}
 
 .param-title{
     display:block;

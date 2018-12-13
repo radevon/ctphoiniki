@@ -98,19 +98,29 @@ namespace CtpView.Controllers
 
         public ActionResult Archive(string BindingId)
         {
-            Address current = repo.GetCtpAddressByBindingId(BindingId);
-            if (current != null)
+            try
             {
-                return View(current);
+                Address current = repo.GetCtpAddressByBindingId(BindingId);
+                if (current != null)
+                {
+                    return View(current);
+                }
+                else
+                    return HttpNotFound();
             }
-            else
-                return HttpNotFound();
+            catch (Exception ex)
+            {
+                return View("DisplayMessage", (object)"<span class='text-danger'>При получении данных по объекту возникла ошибка! Возможно проблема заключается в неполадках базы данных</span>");
+            }
+            
         }
 
 
-        public ActionResult GetArchiveData(string BindingId, DateTime day)
+        public ActionResult GetArchiveData(string BindingId, DateTime day, int dayPart=0)
         {
-            IEnumerable<CtpParameters> parameters = repo.GetCtpParameters(BindingId, day);
+            DateTime from = day.Date.AddHours(dayPart*12); // начало половины суток
+            DateTime to = day.Date.AddHours((dayPart + 1) * 12); // конец половины суток
+            IEnumerable<CtpParameters> parameters = repo.GetCtpParameters(BindingId, from,to);
             return PartialView(parameters);
             
         }

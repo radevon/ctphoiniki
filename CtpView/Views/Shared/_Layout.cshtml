@@ -46,7 +46,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href='@Url.Action("Overview", "Ctp")' title="Просмотр последних показаний по всем объектам в виде таблицы"><span class="glyphicon glyphicon-globe"></span>&nbsp;Общий вид</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-home"></span>&nbsp;Объекты <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-home"></span>&nbsp;Объекты <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             @Html.Action("CtpList","Ctp")
                         </ul>
@@ -54,7 +54,7 @@
                     @if (User.IsInRole("editors"))
                     {
                         <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-edit"></span>&nbsp;Редактор <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-edit"></span>&nbsp;Редактор <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 @Html.ActionLink("Адреса объектов ЦТП", "CtpEditor", "Ctp")
@@ -70,7 +70,7 @@
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-user"></span>&nbsp;Аккаунт <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
