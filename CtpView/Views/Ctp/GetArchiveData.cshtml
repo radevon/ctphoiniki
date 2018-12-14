@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<DapperAbstract.CtpParameters>
 
-<table class="table table-condensed table-hover table-bordered">
+<table class="table table-condensed table-hover table-bordered" id="arch-data">
     <thead>
         <tr>
 
@@ -100,3 +100,7 @@
         }
     </tbody>
 </table>
+
+<div>
+    <button class="btn btn-default" onclick="toExcel('#arch-data', 'Показания ')">В excel</button>
+</div>
