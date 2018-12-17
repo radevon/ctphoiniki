@@ -77,7 +77,10 @@
             });
 
             $("input[name='dayPart']").change(function () {
-                LoadHistory('@Model.BindingId', moment($("#HistoryDate").val(), 'DD.MM.YYYY').tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"), $("input[name='dayPart']:checked").val());
+                if (moment($("#HistoryDate").val()).isValid()) {
+                    LoadHistory('@Model.BindingId', moment($("#HistoryDate").val(), 'DD.MM.YYYY').tz("Europe/Minsk").format("YYYY-MM-DDTHH:mm:ss"), $("input[name='dayPart']:checked").val());
+                }
+                
             });
         });
     </script>
